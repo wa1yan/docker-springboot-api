@@ -1,0 +1,26 @@
+version : '2.2'
+services : 
+  mysqldb :
+    image : mysql:8.0.31
+    enviroment :
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=docker_test_db
+      - MYSQL_PASSWORD=root
+    ports : 
+      - "3307:3306"
+  
+  app :
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      image : docker-springboot-app:latest
+      ports : 
+        - "8090:8080"
+      enviroment :
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=docker_test_db
+        - MYSQL_PASSWORD=root
+        - MYSQL_PORT=3306
+
+  networks:
+    - spring-boot-app
